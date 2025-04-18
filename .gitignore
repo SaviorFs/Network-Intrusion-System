@@ -1,0 +1,10 @@
+# Ignore Firebase credentials
+nids-firebase-firebase-adminsdk-*.json
+
+# Ignore common extras
+*.log
+*.class
+target/
+.idea/
+.vscode/
+.DS_Store

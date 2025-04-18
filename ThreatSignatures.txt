@@ -1,0 +1,10 @@
+malicious_payload
+unauthorized_access
+sql_injection
+cross_site_scripting
+buffer_overflow
+suspicious_scan
+exploit_attempt
+ddos_signature
+brute_force_login
+phishing_link
