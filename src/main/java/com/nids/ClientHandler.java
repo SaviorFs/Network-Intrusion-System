@@ -1,5 +1,6 @@
 package com.nids;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.*;
 import java.net.Socket;
 import java.util.HashSet;
@@ -21,7 +22,7 @@ public class ClientHandler implements Runnable {
                 new InputStreamReader(clientSocket.getInputStream()))) {
 
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                 System.out.println("Received: " + line);
                 if (isThreat(line)) {
                     System.out.println("THREAT DETECTED!");
