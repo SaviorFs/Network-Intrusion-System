@@ -21,12 +21,14 @@ Java Version: 11 or higher
 
 5. In one terminal, run the server:
    ```
-   mvn exec:java -Dexec.mainClass=com.nids.IDS_Server
+   mvn exec:java '-Dexec.mainClass=com.nids.IDS_Server'
+
    ```
 
 6. In another terminal, run the client:
    ```
-   mvn exec:java -Dexec.mainClass=com.nids.IDS_Client
+   mvn exec:java '-Dexec.mainClass=com.nids.IDS_Client'
+   
    ```
 
 7. In the client terminal, type messages. If a message matches something in `ThreatSignatures.txt`, you will:
