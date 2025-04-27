@@ -5,6 +5,13 @@ import java.net.Socket;
 import java.util.HashSet;
 import java.util.Scanner;
 
+
+/**
+ * ClientHandler handles the network traffic from the client socket
+ * it is for reading incoming messages, and checks them agaist the ThreatSignatires.txt
+ * it also triggers and help logs if a threat is detected
+ */
+
 public class ClientHandler implements Runnable {
     private Socket clientSocket;
     private static final String SIGNATURE_FILE = "ThreatSignatures.txt";
@@ -23,9 +30,12 @@ public class ClientHandler implements Runnable {
             String line;
             while ((line = reader.readLine()) != null) {
                 System.out.println("Received: " + line);
+                // checks if recieve message is threat
                 if (isThreat(line)) {
                     System.out.println("THREAT DETECTED!");
+                    // sends a real time udp alrt to the client
                     AlertSender.sendAlert("THREAT DETECTED from " + clientSocket.getInetAddress());
+                    //logs threat to firebase
                     FirebaseLogger.logThreat(clientSocket.getInetAddress().toString(), line);
                 }
             }

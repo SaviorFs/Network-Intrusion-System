@@ -11,23 +11,30 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * FirebaseLogger is for initializing the Firebase connection
+ * and logging detected network threats to Firebase Realtime Database.
+ */
+
 public class FirebaseLogger {
 
-    private static boolean initialized = false;
-    private static DatabaseReference dbRef;
+    private static boolean initialized = false; // tracks if firebase is init
+    private static DatabaseReference dbRef; // reference to 'alerts' in Firebase
 
     private static void initializeFirebase() {
-        if (initialized) return;
+        if (initialized) return; //prevents multiple inits
 
         try {
+            // loads firebase account creds
             FileInputStream serviceAccount = new FileInputStream("nids-firebase-firebase-adminsdk-fbsvc-3e2746bec3.json");
-
+            // old way to configure firebase options it works but deprecated
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .setDatabaseUrl("https://nids-firebase-default-rtdb.firebaseio.com")
                     .build();
-
+            // init firebase app
             FirebaseApp.initializeApp(options);
+            // sets ref to alers
             dbRef = FirebaseDatabase.getInstance().getReference("alerts");
 
             initialized = true;
@@ -45,7 +52,7 @@ public class FirebaseLogger {
             System.err.println("Firebase database reference is null. Logging skipped.");
             return;
         }
-
+        // creates a threat alert in firebase with ip, message, and timestamp
         Map<String, Object> threat = new HashMap<>();
         threat.put("ip", ip);
         threat.put("message", threatData);
